@@ -3,6 +3,7 @@ module Api
   module V1
     class TodosController < ApplicationController
       before_action :set_todo, only: [:show, :update, :destroy, :change_state]
+
       def index
         todos = Todo.all
         todos = todos.where_title_contains(params[:q][:title]) if params[:q]&.dig(:title)

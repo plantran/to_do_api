@@ -7,7 +7,7 @@ class ApplicationController < ActionController::API
   private
 
   def check_token
-    return if request.headers["Authorization"] == Rails.application.credentials["auth"]["token"]
+    return if request.headers["Authorization"] == ENV["API_TOKEN"]
 
     render json: {
       error: {

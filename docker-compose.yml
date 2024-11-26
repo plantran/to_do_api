@@ -1,0 +1,38 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./api:/app
+    environment:
+      - DATABASE_URL=postgres://todouser:todopassword@db:5432/todo_development
+      - API_TOKEN=Foobar42
+
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./front:/app
+    environment:
+      - REACT_APP_API_SECRET=Foobar42
+
+  db:
+    image: postgres:latest
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: todo_development
+      POSTGRES_USER: todouser
+      POSTGRES_PASSWORD: todopassword
+
+volumes:
+  db_data:

@@ -8,6 +8,7 @@ function TodoCard({ todo }) {
         <div className={`status-pill ${todo.status}`}>{todo.status}</div>
         {todo.duedate && <div className="date-pill">{new Date(todo.duedate).toLocaleDateString()}</div>}
       </div>
+      <p style={styles.todoDescription}>{todo.description}</p>
     </div>
   );
 }
@@ -16,6 +17,7 @@ const styles = {
   todoCard: { padding: "20px", borderRadius: "5px", backgroundColor: "#F8F8F8", marginBottom: "10px" },
   todoHeader: { display: "flex", justifyContent: "flex-start", alignItems: "center", gap: "10px" },
   todoTitle: { margin: 0, color: "#333" },
+  todoDescription: { margin: 0, color: "#666", fontSize: "12px" },
 }
 
 export default TodoCard;

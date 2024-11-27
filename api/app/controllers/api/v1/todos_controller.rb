@@ -6,8 +6,7 @@ module Api
 
       def index
         todos = Todo.all
-        todos = todos.where_title_contains(params[:q][:title]) if params[:q]&.dig(:title)
-        todos = todos.where_description_contains(params[:q][:description]) if params[:q]&.dig(:description)
+        todos = todos.where_title_or_description_contains(params[:search]) if params[:search].present?
         todos = todos.page(params[:page])
         render json: todos, status: :ok
       end

@@ -4,7 +4,7 @@ import ListTodos from "./pages/Todos/Index";
 import TodoElem from "./pages/Todos/Show";
 import EditTodo from "./pages/Todos/Edit";
 import NewTodo from "./pages/Todos/New";
-// import NotFound from "./pages/NotFound";
+import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 
 
@@ -18,6 +18,7 @@ function App() {
           <Route path="/todos/:id" element={<TodoElem />} />
           <Route path="/todos/:id/edit" element={<EditTodo />} />
           <Route path="/new_todo" element={<NewTodo />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </Layout>
     </Router>

@@ -5,9 +5,10 @@ module Api
       before_action :set_todo, only: [:show, :update, :destroy, :change_state]
 
       def index
+        page = params[:page].presence.to_i || 1
         todos = Todo.all
         todos = todos.where_title_or_description_contains(params[:search]) if params[:search].present?
-        todos = todos.page(params[:page])
+        todos = todos.page(page)
         render json: { todos: todos, meta: { total_pages: todos.total_pages } }, status: :ok
       end
 

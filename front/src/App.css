@@ -33,6 +33,14 @@ body,html {
   color: #143806;
 }
 
+.pagination {
+  padding: 0 40px;
+}
+.pagination button {
+  width: fit-content;
+  margin: 0 5px;
+}
+
 form {
   max-width: 400px;
   display: flex;

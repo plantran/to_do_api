@@ -7,9 +7,9 @@ class ApiError extends Error {
   }
 }
 
-export const fetchTodos = async (search) => {
-  const searchParam = search ? `?search=${search}` : '';
-  const response = await fetch(`${BASE_URL}/todos${searchParam}`, { headers: { 'Authorization': process.env.REACT_APP_API_SECRET } });
+export const fetchTodos = async (page = 1, search = null) => {
+  const searchParam = search ? `&search=${search}` : '';
+  const response = await fetch(`${BASE_URL}/todos?page=${page}${searchParam}`, { headers: { 'Authorization': process.env.REACT_APP_API_SECRET } });
   if (!response.ok) throw new Error("Failed to fetch todos");
   return response.json();
 };

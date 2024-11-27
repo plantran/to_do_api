@@ -8,7 +8,7 @@ module Api
         todos = Todo.all
         todos = todos.where_title_or_description_contains(params[:search]) if params[:search].present?
         todos = todos.page(params[:page])
-        render json: todos, status: :ok
+        render json: { todos: todos, meta: { total_pages: todos.total_pages } }, status: :ok
       end
 
       def show

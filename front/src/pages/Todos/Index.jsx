@@ -9,6 +9,8 @@ function ListTodos() {
   const location = useLocation();
   const [todos, setTodos] = useState([])
   const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -16,18 +18,24 @@ function ListTodos() {
     if (searchParam) {
       setSearchQuery(searchParam);
     }
-    fetchTodos(searchParam).then((todos) => {
-      setTodos(todos)
+    fetchTodos(currentPage, searchParam).then((todos) => {
+      setTodos(todos.todos);
+      setTotalPages(todos.meta.total_pages);
     }).catch((error) => console.log(error))
-  }, [location.search]);
+  }, [location.search, currentPage]);
 
   const handleSearch = (event) => {
     event.preventDefault();
+    setCurrentPage(1);
     if (searchQuery) {
       window.location.href = `?search=${encodeURIComponent(searchQuery)}`;
     } else {
       window.location.href = '/todos';
     }
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   return (
@@ -52,6 +60,17 @@ function ListTodos() {
           </li>
         ))}
       </ul>
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => handlePageChange(index + 1)}
+            disabled={currentPage === index + 1}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

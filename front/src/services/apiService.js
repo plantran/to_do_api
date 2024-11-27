@@ -1,5 +1,12 @@
 const BASE_URL = "http://localhost:3000/api/v1";
 
+class ApiError extends Error {
+  constructor(message, errorData) {
+    super(message);
+    this.errorData = errorData;
+  }
+}
+
 export const fetchTodos = async (search) => {
   const searchParam = search ? `?search=${search}` : '';
   const response = await fetch(`${BASE_URL}/todos${searchParam}`, { headers: { 'Authorization': process.env.REACT_APP_API_SECRET } });
@@ -18,7 +25,7 @@ export const createTodo = async (data) => {
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error("Failed to create todo:" + errorData.error.message);
+    throw new ApiError("Failed to create todo", errorData);
   }
   return response.json();
 };
@@ -27,7 +34,8 @@ export const updateTodo = async (id, data) => {
   const response = await fetch(`${BASE_URL}/todos/${id}`, { headers: { "Content-Type": "application/json", 'Authorization': process.env.REACT_APP_API_SECRET }, method: "PATCH", body: JSON.stringify(data) });
 
   if (!response.ok) {
-    throw new Error("Failed to update todo");
+    const errorData = await response.json();
+    throw new ApiError("Failed to update todo", errorData);
   }
   return response.json();
 };

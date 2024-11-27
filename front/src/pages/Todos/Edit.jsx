@@ -6,7 +6,7 @@ import { fetchTodo, updateTodo } from '../../services/apiService';
 function EditTodo() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ todo: { title: "", description: "", duedate: null } });
+  const [formData, setFormData] = useState({ todo: { title: "", description: "", duedate: null, status: "" } });
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -28,14 +28,13 @@ function EditTodo() {
       await updateTodo(id, formData);
       navigate(`/todos/${id}`);
     } catch (err) {
-      setError(err);
+      setError(err.errorData.error.message);
     }
   };
 
   return (
     <div>
       <h1>Edit Todo</h1>
-      {error && <div>{error.message}</div>}
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="title">Title</label>
@@ -47,6 +46,7 @@ function EditTodo() {
             onChange={handleChange}
             required
           />
+          {error && error.title && <div style={{ color: "red" }}>{error.title}</div>}
         </div>
         <div>
           <label htmlFor="description">Description</label>
@@ -67,6 +67,21 @@ function EditTodo() {
             onChange={handleChange}
             min={new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0]}
           />
+          {error && error.duedate && <div style={{ color: "red" }}>{error.duedate}</div>}
+        </div>
+        <div>
+          <label htmlFor="status">Status</label>
+          <select
+            id="status"
+            name="status"
+            value={formData.todo.status}
+            onChange={handleChange}
+            required
+          >
+            <option value="pending">Pending</option>
+            <option value="in_progress">In progress</option>
+            <option value="completed">Completed</option>
+          </select>
         </div>
         <button type="submit">Update Todo</button>
       </form>

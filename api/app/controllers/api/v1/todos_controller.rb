@@ -20,7 +20,7 @@ module Api
         if todo.save
           render json: todo, status: :created
         else
-          render json: { error: { message: todo.errors.full_messages }}, status: :unprocessable_entity
+          render json: { error: { message: todo.errors.messages }}, status: :unprocessable_entity
         end
       end
 
@@ -28,7 +28,7 @@ module Api
         if @todo.update(todo_params)
           render json: @todo, status: :ok
         else
-          render json: { error: { message: @todo.errors.full_messages }}, status: :unprocessable_entity
+          render json: { error: { message: @todo.errors.messages }}, status: :unprocessable_entity
         end
       end
 

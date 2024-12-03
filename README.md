@@ -66,12 +66,13 @@ Build a simple API to manage a Todo application. The API should allow users to m
 * Go the `api` folder
   * Run `bundle install`
   * Create a user in postgres: `CREATE ROLE todouser WITH createdb login password 'todopassword';`
+  * Run `touch .env ; echo 'API_TOKEN=Foobar42' > .env`
   * Create a `.env` file and add the following line: `API_TOKEN=Foobar42`
   * Run `rails db:setup`
   * Start the server with `rails s`
 * Go to the `front` folder
   * Run `npm install`
-  * Create an `.env` file and add the following line: `REACT_APP_API_SECRET="Foobar42"`
-  * Run `PORT=3001 npm run dev`
+  * Run `touch .env ; echo 'REACT_APP_API_SECRET="Foobar42"' > .env`
+  * Run `PORT=3001 npm start`
 
 You can access the application on `http://localhost:3001`.

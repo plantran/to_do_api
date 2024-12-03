@@ -22,6 +22,7 @@ services:
       - "3001:3001"
     volumes:
       - ./front:/app
+      - /app/node_modules
     environment:
       - REACT_APP_API_SECRET=Foobar42
 
